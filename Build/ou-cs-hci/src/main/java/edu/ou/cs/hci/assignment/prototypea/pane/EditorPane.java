@@ -261,15 +261,14 @@ public final class EditorPane extends AbstractPane
 		selectPosterButton = new Button("Select Poster");
 
 		// Init ImageViews
-		FileInputStream posterInput = new FileInputStream("path/to/image.jpg");
-		FileInputStream userProfileImageInput = new FileInputStream("path/to/image.jpg");
+		FileInputStream posterInput = new FileInputStream(RSRC + "/assignment/movie-poster.jpg");
+		FileInputStream userProfileImageInput = new FileInputStream(RSRC+ "/assignment/profile-image.png");
 
 		Image moviePosterImage = new Image(posterInput);
 		Image userProfileImage = new Image(userProfileImageInput);
 
 		moviePosterImageView = new ImageView(moviePosterImage);
 		userProfileImageView = new ImageView(userProfileImage);
-
 	}
 
 	// The controller calls this method when it removes a view.
@@ -284,6 +283,42 @@ public final class EditorPane extends AbstractPane
 
 		// Widget Gallery, Text Field
 		textField.setOnAction(null);
+
+		// Text Fields
+		yearTF.setOnAction(null);
+		averageRatingTF.setOnAction(null);
+		posterPathTF.setOnAction(null);
+
+		// CheckBox
+		isColorCheckBox.valueProperty().removeListener(this::changeBoolean);
+		isAnimatedCheckBox.valueProperty().removeListener(this::changeBoolean);
+		actionGenreCheckBox.valueProperty().removeListener(this::changeBoolean);
+		comedyGenreCheckBox.valueProperty().removeListener(this::changeBoolean);
+		documentaryGenreCheckBox.valueProperty().removeListener(this::changeBoolean);
+		dramaGenreCheckBox.valueProperty().removeListener(this::changeBoolean);
+		fantasyGenreCheckBox.valueProperty().removeListener(this::changeBoolean);
+		horrorGenreCheckBox.valueProperty().removeListener(this::changeBoolean);
+		romanceGenreCheckBox.valueProperty().removeListener(this::changeBoolean);
+		scifiGenreCheckBox.valueProperty().removeListener(this::changeBoolean);
+		thrillerGenreCheckBox.valueProperty().removeListener(this::changeBoolean);
+		westernGenreCheckBox.valueProperty().removeListener(this::changeBoolean);
+		pictureAwardCheckBox.valueProperty().removeListener(this::changeBoolean);
+		directingAwardCheckBox.valueProperty().removeListener(this::changeBoolean);
+		cinematographyAwardCheckBox.valueProperty().removeListener(this::changeBoolean);
+		actingAwardCheckBox.valueProperty().removeListener(this::changeBoolean);
+
+		// Spinner
+		numberOfReviewsSpinner.valueProperty().removeListener(this::changeInteger);
+
+		// Slider
+		runtimeSlider.valueProperty().removeListener(this::changeDecimal);
+
+		// ChoiceBoxes
+		ratingChoiceBox.valueProperty().removeListener(this::changeBoolean);
+
+		// Text Areas
+		summaryTextArea.setOnAction(null);
+
 	}
 
 	// The controller calls this method whenever something changes in the model.
@@ -303,6 +338,119 @@ public final class EditorPane extends AbstractPane
 		else if ("myString".equals(key))
 		{
 			textField.setText((String)value);
+		}
+
+		// if ("director".equals(key))
+		// {
+		// 	component.setValue((Boolean) value);
+		// }
+		// else if ("title".equals(key))
+		// {
+		// 	component.setValue((Boolean) value);
+		// }
+		if ("summary".equals(key))
+		{
+			summaryTextArea.setText((String) value);
+		}
+		// else if ("comment_body".equals(key))
+		// {
+		// 	component.setValue((Boolean) value);
+		// }
+		// else if ("user_name".equals(key))
+		// {
+		// 	component.setValue((Boolean) value);
+		// }
+		else if ("poster_image_path".equals(key))
+		{
+			posterPathTF.setText((String) value);
+		}
+		else if ("average_review_score".equals(key))
+		{
+			averageRatingTF.setText((String) value);
+		}
+		// else if ("award_picture".equals(key))
+		// {
+		// 	component.setValue((Boolean) value);
+		// }
+		else if ("award_directing".equals(key))
+		{
+			directingAwardCheckBox.setSelected((Boolean) value);
+		}
+		else if ("award_cinematography".equals(key))
+		{
+			cinematographyAwardCheckBox.setSelected((Boolean) value);
+		}
+		else if ("award_acting".equals(key))
+		{
+			actingAwardCheckBox.setSelected((Boolean) value);
+		}
+		else if ("genre_action".equals(key))
+		{
+			actingAwardCheckBox.setSelected((Boolean) value);
+		}
+		else if ("genre_comedy".equals(key))
+		{
+			comedyGenreCheckBox.setSelected((Boolean) value);
+		}
+		else if ("genre_drama".equals(key))
+		{
+			dramaGenreCheckBox.setSelected((Boolean) value);
+		}
+		else if ("genre_documentary".equals(key))
+		{
+			documentaryGenreCheckBox.setSelected((Boolean) value);
+		}
+		else if ("genre_drama".equals(key))
+		{
+			dramaGenreCheckBox.setSelected((Boolean) value);
+		}
+		else if ("genre_fantasy".equals(key))
+		{
+			fantasyGenreCheckBox.setSelected((Boolean) value);
+		}
+		else if ("genre_horror".equals(key))
+		{
+			horrorGenreCheckBox.setSelected((Boolean) value);
+		}
+		else if ("genre_romance".equals(key))
+		{
+			romanceGenreCheckBox.setSelected((Boolean) value);
+		}
+		else if ("genre_sci-fi".equals(key))
+		{
+			scifiGenreCheckBox.setSelected((Boolean) value);
+		}
+		else if ("genre_thriller".equals(key))
+		{
+			thrillerGenreCheckBox.setSelected((Boolean) value);
+		}
+		else if ("genre_western".equals(key))
+		{
+			westernGenreCheckBox.setSelected((Boolean) value);
+		}
+		else if ("is_animated".equals(key))
+		{
+			isAnimatedCheckBox.setSelected((Boolean) value);
+		}
+		else if ("is_color".equals(key))
+		{
+			isColorCheckBox.setSelected((Boolean) value);
+		}
+		else if ("number_of_reviews".equals(key))
+		{
+			numberOfReviewsSpinner.getValueFactory().setValue((Integer) value);
+		}
+		else if ("rating".equals(key))
+		{
+			ratingChoiceBox.getSelectionModel().select((Integer) value);
+		}
+		else if ("runtime".equals(key))
+		{
+			runtimeSlider.setValue((Double) value);
+		}
+		else if ("year".equals(key))
+		{
+			yearTF.setText((String) value);
 		}
 	}
 
