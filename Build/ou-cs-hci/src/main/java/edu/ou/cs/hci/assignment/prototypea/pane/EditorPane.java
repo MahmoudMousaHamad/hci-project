@@ -104,6 +104,9 @@ public final class EditorPane extends AbstractPane
 	// Buttons
 	private Button					selectPosterButton;
 
+	// Images
+	private Image					moviePosterImage, userProfileImage;
+
 	// Handlers
 	private final ActionHandler	actionHandler;
 
