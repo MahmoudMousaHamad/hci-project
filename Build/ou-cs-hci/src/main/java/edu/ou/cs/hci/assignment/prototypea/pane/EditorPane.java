@@ -68,6 +68,42 @@ public final class EditorPane extends AbstractPane
 
 	private TextField				textField;
 
+	// Labels
+	private Label 					directorLabel, yearLabel, ratingLabel,
+									runtimeLabel, averageReviewLabel, numberOfReviewsLabel, isColorLabel, 
+									isAnimatedLabel, actionGenreLabel, comedyGenreLabel, documentaryGenreLabel, 
+									dramaGenreLabel, fantasyGenreLabel, horrorGenreLabel, romanceGenreLabel, 
+									scifiGenreLabel, thrillerGenreLabel, westernGenreLabel, pictureAwardLabel, 
+									directingAwardLabel, cinematographyAwardLabel, actingAwardLabel, 
+									usernameLabel;
+
+	// Text fields
+	private TextField 				yearTF, averageRatingTF, posterPathTF;
+
+	// Checkboxes
+	private JCheckBox 				isColorCheckBox, isAnimatedCheckBox, actionGenreCheckBox, comedyGenreCheckBox, documentaryGenreCheckBox, 
+									dramaGenreCheckBox, fantasyGenreCheckBox, horrorGenreCheckBox, romanceGenreCheckBox, 
+									scifiGenreCheckBox, thrillerGenreCheckBox, westernGenreCheckBox, pictureAwardCheckBox, 
+									directingAwardCheckBox, cinematographyAwardCheckBox, actingAwardCheckBox;
+
+	// Spinner
+	private Spinner<Integer>		numberOfReviewsSpinner;
+
+	// Sliders
+	private Slider					runtimeSlider;
+
+	// Choice Boxes
+	private ChoiceBox				ratingChoiceBox;
+
+	// Text Areas
+	private TextArea				summaryTextArea;
+
+	// Texts
+	private Text					commentText, movieTitleText, summaryHeadlineText, commentsHeadlineText;
+
+	// Buttons
+	private Button					selectPosterButton;
+
 	// Handlers
 	private final ActionHandler	actionHandler;
 

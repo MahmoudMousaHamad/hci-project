@@ -49,9 +49,33 @@ public final class Model
 		properties = new HashMap<String, Object>();
 
 		// Parameters accessed and/or modified by EditorPane controls
-		properties.put("myDouble",		5.0);
-		properties.put("myInt",		5);
-		properties.put("myString",		"123abc");
+		properties.put("director",						"director_name");
+		properties.put("title",							"title");
+		properties.put("summary",						"Summary summary summary summary summary summary summary summary ");
+		properties.put("comment_body",					"Great movie!");
+		properties.put("user_name",						"Mahmoud Mousa Hamad");
+		properties.put("poster_image_path",				"path/to/image.jpg");
+		properties.put("average_review_score",			10.0);
+		properties.put("award_directing",				Boolean.TRUE);
+		properties.put("award_cinematography",			Boolean.TRUE);
+		properties.put("award_acting",					Boolean.TRUE);
+		properties.put("genre_action",					Boolean.FALSE);
+		properties.put("genre_comedy",					Boolean.FALSE);
+		properties.put("genre_drama",					Boolean.FALSE);
+		properties.put("genre_documentary",				Boolean.FALSE);
+		properties.put("genre_drama",					Boolean.FALSE);
+		properties.put("genre_fantasy",					Boolean.FALSE);
+		properties.put("genre_horror",					Boolean.FALSE);
+		properties.put("genre_romance",					Boolean.FALSE);
+		properties.put("genre_sci-fi",					Boolean.FALSE);
+		properties.put("genre_thriller",				Boolean.FALSE);
+		properties.put("genre_western",					Boolean.FALSE);
+		properties.put("is_animated",					Boolean.FALSE);
+		properties.put("is_color",						Boolean.FALSE);
+		properties.put("number_of_reviews",				10);
+		properties.put("rating",						"PG-13");
+		properties.put("runtime",						250);
+		properties.put("year",							2010);
 	}
 
 	//**********************************************************************
