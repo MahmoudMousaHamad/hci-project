@@ -81,7 +81,7 @@ public final class EditorPane extends AbstractPane
 	private TextField 				yearTF, averageRatingTF, posterPathTF;
 
 	// Checkboxes
-	private JCheckBox 				isColorCheckBox, isAnimatedCheckBox, actionGenreCheckBox, comedyGenreCheckBox, documentaryGenreCheckBox, 
+	private CheckBox 				isColorCheckBox, isAnimatedCheckBox, actionGenreCheckBox, comedyGenreCheckBox, documentaryGenreCheckBox, 
 									dramaGenreCheckBox, fantasyGenreCheckBox, horrorGenreCheckBox, romanceGenreCheckBox, 
 									scifiGenreCheckBox, thrillerGenreCheckBox, westernGenreCheckBox, pictureAwardCheckBox, 
 									directingAwardCheckBox, cinematographyAwardCheckBox, actingAwardCheckBox;
@@ -114,8 +114,7 @@ public final class EditorPane extends AbstractPane
 	// Constructors and Finalizer
 	//**********************************************************************
 
-	public EditorPane(Controller controller)
-	{
+	public EditorPane(final Controller controller) {
 		super(controller, NAME, HINT);
 
 		actionHandler = new ActionHandler();
@@ -123,47 +122,46 @@ public final class EditorPane extends AbstractPane
 		setBase(buildPane());
 	}
 
-	//**********************************************************************
+	// **********************************************************************
 	// Public Methods (Controller)
-	//**********************************************************************
+	// **********************************************************************
 
 	// The controller calls this method when it adds a view.
 	// Set up the nodes in the view with data accessed through the controller.
-	public void	initialize()
-	{
+	public void initialize() {
 		// Widget Gallery, Slider
-		slider.setValue((Double)controller.get("myDouble"));
+		slider.setValue((Double) controller.get("myDouble"));
 
 		// Widget Gallery, Spinner
-		spinner.getValueFactory().setValue((Integer)controller.get("myInt"));
+		spinner.getValueFactory().setValue((Integer) controller.get("myInt"));
 
 		// Widget Gallery, Text Field
-		textField.setText((String)controller.get("myString"));
+		textField.setText((String) controller.get("myString"));
 
 		// Init labels
-		directorLabel = 			new Label("Director");
-		yearLabel = 				new Label("Year");
-		ratingLabel = 				new Label("Rating");
-		runtimeLabel = 				new Label("Runtime");
-		averageReviewLabel = 		new Label("Average Review");
-		numberOfReviewsLabel = 		new Label("Number of Reviews");
-		isColorLabel = 				new Label("Colored");
-		isAnimatedLabel = 			new Label("Animated");
-		actionGenreLabel = 			new Label("Action");
-		comedyGenreLabel = 			new Label("Comedy");
-		documentaryGenreLabel =	 	new Label("Documentary");
-		dramaGenreLabel = 			new Label("Drama");
-		fantasyGenreLabel = 		new Label("Fantasy");
-		horrorGenreLabel = 			new Label("Horror");
-		romanceGenreLabel = 		new Label("Romance");
-		scifiGenreLabel = 			new Label("Sci-Fi");
-		thrillerGenreLabel = 		new Label("Thriller");
-		westernGenreLabel = 		new Label("Western");
-		pictureAwardLabel = 		new Label("Picture Award");
-		directingAwardLabel = 		new Label("Driecting Award");
-		cinematographyAwardLabel = 	new Label("Cinematography Award");
-		actingAwardLabel = 			new Label("Acting Award");
-		usernameLabel = 			new Label("Username");
+		directorLabel = new Label("Director");
+		yearLabel = new Label("Year");
+		ratingLabel = new Label("Rating");
+		runtimeLabel = new Label("Runtime");
+		averageReviewLabel = new Label("Average Review");
+		numberOfReviewsLabel = new Label("Number of Reviews");
+		isColorLabel = new Label("Colored");
+		isAnimatedLabel = new Label("Animated");
+		actionGenreLabel = new Label("Action");
+		comedyGenreLabel = new Label("Comedy");
+		documentaryGenreLabel = new Label("Documentary");
+		dramaGenreLabel = new Label("Drama");
+		fantasyGenreLabel = new Label("Fantasy");
+		horrorGenreLabel = new Label("Horror");
+		romanceGenreLabel = new Label("Romance");
+		scifiGenreLabel = new Label("Sci-Fi");
+		thrillerGenreLabel = new Label("Thriller");
+		westernGenreLabel = new Label("Western");
+		pictureAwardLabel = new Label("Picture Award");
+		directingAwardLabel = new Label("Driecting Award");
+		cinematographyAwardLabel = new Label("Cinematography Award");
+		actingAwardLabel = new Label("Acting Award");
+		usernameLabel = new Label("Username");
 
 		// Init Text fields
 		yearTF = new TextField();
@@ -238,7 +236,7 @@ public final class EditorPane extends AbstractPane
 		ratingChoiceBox.getItems().add("R");
 		ratingChoiceBox.getItems().add("PG-13");
 		ratingChoiceBox.getItems().add("G");
-		ratingChoiceBox.getSelectionModel().select((Integer) controller.get("rating"))
+		ratingChoiceBox.getSelectionModel().select((Integer) controller.get("rating"));
 
 		// Init Text Areas
 		summaryTextArea = new TextArea();
@@ -253,7 +251,7 @@ public final class EditorPane extends AbstractPane
 
 		summaryHeadlineText = new Text("Summary");
 		summaryHeadlineText.setFont(FONT_LARGE);
-		
+
 		commentsHeadlineText = new Text("Comments");
 		commentsHeadlineText.setFont(FONT_LARGE);
 
@@ -261,11 +259,11 @@ public final class EditorPane extends AbstractPane
 		selectPosterButton = new Button("Select Poster");
 
 		// Init ImageViews
-		FileInputStream posterInput = new FileInputStream(RSRC + "/assignment/movie-poster.jpg");
-		FileInputStream userProfileImageInput = new FileInputStream(RSRC+ "/assignment/profile-image.png");
+		final FileInputStream posterInput = new FileInputStream(RSRC + "/assignment/movie-poster.jpg");
+		final FileInputStream userProfileImageInput = new FileInputStream(RSRC + "/assignment/profile-image.png");
 
-		Image moviePosterImage = new Image(posterInput);
-		Image userProfileImage = new Image(userProfileImageInput);
+		final Image moviePosterImage = new Image(posterInput);
+		final Image userProfileImage = new Image(userProfileImageInput);
 
 		moviePosterImageView = new ImageView(moviePosterImage);
 		userProfileImageView = new ImageView(userProfileImage);
@@ -273,8 +271,7 @@ public final class EditorPane extends AbstractPane
 
 	// The controller calls this method when it removes a view.
 	// Unregister event and property listeners for the nodes in the view.
-	public void	terminate()
-	{
+	public void terminate() {
 		// Widget Gallery, Slider
 		slider.valueProperty().removeListener(this::changeDecimal);
 
@@ -323,145 +320,95 @@ public final class EditorPane extends AbstractPane
 
 	// The controller calls this method whenever something changes in the model.
 	// Update the nodes in the view to reflect the change.
-	public void	update(String key, Object value)
-	{
-		//System.out.println("update " + key + " to " + value);
+	public void update(final String key, final Object value) {
+		// System.out.println("update " + key + " to " + value);
 
-		if ("myDouble".equals(key))
-		{
-			slider.setValue((Double)value);
-		}
-		else if ("myInt".equals(key))
-		{
-			spinner.getValueFactory().setValue((Integer)value);
-		}
-		else if ("myString".equals(key))
-		{
-			textField.setText((String)value);
+		if ("myDouble".equals(key)) {
+			slider.setValue((Double) value);
+		} else if ("myInt".equals(key)) {
+			spinner.getValueFactory().setValue((Integer) value);
+		} else if ("myString".equals(key)) {
+			textField.setText((String) value);
 		}
 
 		// if ("director".equals(key))
 		// {
-		// 	component.setValue((Boolean) value);
+		// component.setValue((Boolean) value);
 		// }
 		// else if ("title".equals(key))
 		// {
-		// 	component.setValue((Boolean) value);
+		// component.setValue((Boolean) value);
 		// }
-		if ("summary".equals(key))
-		{
+		if ("summary".equals(key)) {
 			summaryTextArea.setText((String) value);
 		}
 		// else if ("comment_body".equals(key))
 		// {
-		// 	component.setValue((Boolean) value);
+		// component.setValue((Boolean) value);
 		// }
 		// else if ("user_name".equals(key))
 		// {
-		// 	component.setValue((Boolean) value);
+		// component.setValue((Boolean) value);
 		// }
-		else if ("poster_image_path".equals(key))
-		{
+		else if ("poster_image_path".equals(key)) {
 			posterPathTF.setText((String) value);
-		}
-		else if ("average_review_score".equals(key))
-		{
+		} else if ("average_review_score".equals(key)) {
 			averageRatingTF.setText((String) value);
 		}
 		// else if ("award_picture".equals(key))
 		// {
-		// 	component.setValue((Boolean) value);
+		// component.setValue((Boolean) value);
 		// }
-		else if ("award_directing".equals(key))
-		{
+		else if ("award_directing".equals(key)) {
 			directingAwardCheckBox.setSelected((Boolean) value);
-		}
-		else if ("award_cinematography".equals(key))
-		{
+		} else if ("award_cinematography".equals(key)) {
 			cinematographyAwardCheckBox.setSelected((Boolean) value);
-		}
-		else if ("award_acting".equals(key))
-		{
+		} else if ("award_acting".equals(key)) {
 			actingAwardCheckBox.setSelected((Boolean) value);
-		}
-		else if ("genre_action".equals(key))
-		{
+		} else if ("genre_action".equals(key)) {
 			actingAwardCheckBox.setSelected((Boolean) value);
-		}
-		else if ("genre_comedy".equals(key))
-		{
+		} else if ("genre_comedy".equals(key)) {
 			comedyGenreCheckBox.setSelected((Boolean) value);
-		}
-		else if ("genre_drama".equals(key))
-		{
+		} else if ("genre_drama".equals(key)) {
 			dramaGenreCheckBox.setSelected((Boolean) value);
-		}
-		else if ("genre_documentary".equals(key))
-		{
+		} else if ("genre_documentary".equals(key)) {
 			documentaryGenreCheckBox.setSelected((Boolean) value);
-		}
-		else if ("genre_drama".equals(key))
-		{
+		} else if ("genre_drama".equals(key)) {
 			dramaGenreCheckBox.setSelected((Boolean) value);
-		}
-		else if ("genre_fantasy".equals(key))
-		{
+		} else if ("genre_fantasy".equals(key)) {
 			fantasyGenreCheckBox.setSelected((Boolean) value);
-		}
-		else if ("genre_horror".equals(key))
-		{
+		} else if ("genre_horror".equals(key)) {
 			horrorGenreCheckBox.setSelected((Boolean) value);
-		}
-		else if ("genre_romance".equals(key))
-		{
+		} else if ("genre_romance".equals(key)) {
 			romanceGenreCheckBox.setSelected((Boolean) value);
-		}
-		else if ("genre_sci-fi".equals(key))
-		{
+		} else if ("genre_sci-fi".equals(key)) {
 			scifiGenreCheckBox.setSelected((Boolean) value);
-		}
-		else if ("genre_thriller".equals(key))
-		{
+		} else if ("genre_thriller".equals(key)) {
 			thrillerGenreCheckBox.setSelected((Boolean) value);
-		}
-		else if ("genre_western".equals(key))
-		{
+		} else if ("genre_western".equals(key)) {
 			westernGenreCheckBox.setSelected((Boolean) value);
-		}
-		else if ("is_animated".equals(key))
-		{
+		} else if ("is_animated".equals(key)) {
 			isAnimatedCheckBox.setSelected((Boolean) value);
-		}
-		else if ("is_color".equals(key))
-		{
+		} else if ("is_color".equals(key)) {
 			isColorCheckBox.setSelected((Boolean) value);
-		}
-		else if ("number_of_reviews".equals(key))
-		{
+		} else if ("number_of_reviews".equals(key)) {
 			numberOfReviewsSpinner.getValueFactory().setValue((Integer) value);
-		}
-		else if ("rating".equals(key))
-		{
+		} else if ("rating".equals(key)) {
 			ratingChoiceBox.getSelectionModel().select((Integer) value);
-		}
-		else if ("runtime".equals(key))
-		{
+		} else if ("runtime".equals(key)) {
 			runtimeSlider.setValue((Double) value);
-		}
-		else if ("year".equals(key))
-		{
+		} else if ("year".equals(key)) {
 			yearTF.setText((String) value);
 		}
 	}
 
-	//**********************************************************************
+	// **********************************************************************
 	// Private Methods (Layout)
-	//**********************************************************************
+	// **********************************************************************
 
-	private Pane	buildPane()
-	{
+	private Pane buildPane() {
 		// Layout the widgets in a vertical flow with small gaps between them.
-		FlowPane	pane = new FlowPane(Orientation.VERTICAL, 8.0, 8.0);
+		final FlowPane pane = new FlowPane(Orientation.VERTICAL, 8.0, 8.0);
 
 		pane.setAlignment(Pos.TOP_LEFT);
 
@@ -472,14 +419,13 @@ public final class EditorPane extends AbstractPane
 		return pane;
 	}
 
-	//**********************************************************************
+	// **********************************************************************
 	// Private Methods (Widget Pane Creators)
-	//**********************************************************************
+	// **********************************************************************
 
 	// Create a pane with a slider for the gallery. The progress bar and
 	// slider show the same value from the model, so are synchronized.
-	private Pane	createSlider()
-	{
+	private Pane createSlider() {
 		slider = new Slider(0.0, 100.0, 0.0);
 
 		slider.setOrientation(Orientation.HORIZONTAL);
@@ -495,8 +441,7 @@ public final class EditorPane extends AbstractPane
 
 	// Create a pane with a spinner for the gallery. The progress bar,
 	// slider, and spinner show the same value from the model, so stay synced.
-	private Pane	createSpinner()
-	{
+	private Pane createSpinner() {
 		spinner = new Spinner<Integer>(0, 100, 0, 1);
 
 		spinner.setEditable(true);
@@ -508,8 +453,7 @@ public final class EditorPane extends AbstractPane
 	}
 
 	// Create a pane with a text field for the gallery.
-	private Pane	createTextField()
-	{
+	private Pane createTextField() {
 		textField = new TextField();
 
 		textField.setPrefColumnCount(6);
@@ -519,34 +463,35 @@ public final class EditorPane extends AbstractPane
 		return createTitledPane(textField, "Text Field");
 	}
 
-	//**********************************************************************
+	// **********************************************************************
 	// Private Methods (Property Change Handlers)
-	//**********************************************************************
+	// **********************************************************************
 
-	private void	changeDecimal(ObservableValue<? extends Number> observable,
-								  Number oldValue, Number newValue)
-	{
+	private void changeDecimal(final ObservableValue<? extends Number> observable, final Number oldValue,
+			final Number newValue) {
 		if (observable == slider.valueProperty())
 			controller.set("myDouble", newValue);
 	}
 
-	private void	changeInteger(ObservableValue<? extends Number> observable,
-								  Number oldValue, Number newValue)
-	{
+	private void changeInteger(final ObservableValue<? extends Number> observable, final Number oldValue,
+			final Number newValue) {
 		if (observable == spinner.valueProperty())
 			controller.set("myInt", newValue);
 	}
 
-	//**********************************************************************
-	// Inner Classes (Event Handlers)
-	//**********************************************************************
+	private void changeInteger(final ObservableValue<? extends Number> observable, final Number oldValue,
+			final Number newValue) {
+		if (observable == spinner.valueProperty())
+			controller.set("myInt", newValue);
+	}
 
-	private final class ActionHandler
-		implements EventHandler<ActionEvent>
-	{
-		public void	handle(ActionEvent e)
-		{
-			Object	source = e.getSource();
+	// **********************************************************************
+	// Inner Classes (Event Handlers)
+	// **********************************************************************
+
+	private final class ActionHandler implements EventHandler<ActionEvent> {
+		public void handle(final ActionEvent e) {
+			final Object source = e.getSource();
 
 			if (source == textField)
 				controller.set("myString", textField.getText());
