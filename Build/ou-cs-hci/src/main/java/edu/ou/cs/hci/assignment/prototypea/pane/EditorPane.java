@@ -479,7 +479,7 @@ public final class EditorPane extends AbstractPane
 			controller.set("myInt", newValue);
 	}
 
-	private void changeInteger(final ObservableValue<? extends Number> observable, final Number oldValue,
+	private void changeBoolean(final ObservableValue<? extends Number> observable, final Number oldValue,
 			final Number newValue) {
 		if (observable == spinner.valueProperty())
 			controller.set("myInt", newValue);
