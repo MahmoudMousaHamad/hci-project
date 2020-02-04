@@ -56,6 +56,7 @@ public final class Model
 		properties.put("user_name",						"Mahmoud Mousa Hamad");
 		properties.put("poster_image_path",				"path/to/image.jpg");
 		properties.put("average_review_score",			10.0);
+		properties.put("award_picture",					Boolean.TRUE);
 		properties.put("award_directing",				Boolean.TRUE);
 		properties.put("award_cinematography",			Boolean.TRUE);
 		properties.put("award_acting",					Boolean.TRUE);
@@ -73,7 +74,7 @@ public final class Model
 		properties.put("is_animated",					Boolean.FALSE);
 		properties.put("is_color",						Boolean.FALSE);
 		properties.put("number_of_reviews",				10);
-		properties.put("rating",						"PG-13");
+		properties.put("rating",						0);
 		properties.put("runtime",						250);
 		properties.put("year",							2010);
 	}

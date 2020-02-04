@@ -105,7 +105,7 @@ public final class EditorPane extends AbstractPane
 	private Button					selectPosterButton;
 
 	// Images
-	private Image					moviePosterImage, userProfileImage;
+	private ImageView					moviePosterImageView, userProfileImageView;
 
 	// Handlers
 	private final ActionHandler	actionHandler;
@@ -139,6 +139,137 @@ public final class EditorPane extends AbstractPane
 
 		// Widget Gallery, Text Field
 		textField.setText((String)controller.get("myString"));
+
+		// Init labels
+		directorLabel = 			new Label("Director");
+		yearLabel = 				new Label("Year");
+		ratingLabel = 				new Label("Rating");
+		runtimeLabel = 				new Label("Runtime");
+		averageReviewLabel = 		new Label("Average Review");
+		numberOfReviewsLabel = 		new Label("Number of Reviews");
+		isColorLabel = 				new Label("Colored");
+		isAnimatedLabel = 			new Label("Animated");
+		actionGenreLabel = 			new Label("Action");
+		comedyGenreLabel = 			new Label("Comedy");
+		documentaryGenreLabel =	 	new Label("Documentary");
+		dramaGenreLabel = 			new Label("Drama");
+		fantasyGenreLabel = 		new Label("Fantasy");
+		horrorGenreLabel = 			new Label("Horror");
+		romanceGenreLabel = 		new Label("Romance");
+		scifiGenreLabel = 			new Label("Sci-Fi");
+		thrillerGenreLabel = 		new Label("Thriller");
+		westernGenreLabel = 		new Label("Western");
+		pictureAwardLabel = 		new Label("Picture Award");
+		directingAwardLabel = 		new Label("Driecting Award");
+		cinematographyAwardLabel = 	new Label("Cinematography Award");
+		actingAwardLabel = 			new Label("Acting Award");
+		usernameLabel = 			new Label("Username");
+
+		// Init Text fields
+		yearTF = new TextField();
+		yearTF.setText((String) controller.get("year"));
+
+		averageRatingTF = new TextField();
+		averageRatingTF.setText((String) controller.get("average_review_score"));
+
+		posterPathTF = new TextField();
+		posterPathTF.setText((String) controller.get("poster_image_path"));
+
+		// Checkboxes
+		isColorCheckBox = new CheckBox("Colored");
+		isColorCheckBox.setSelected((Boolean) controller.get("is_color"));
+
+		isAnimatedCheckBox = new CheckBox("Animated");
+		isAnimatedCheckBox.setSelected((Boolean) controller.get("is_animated"));
+
+		actionGenreCheckBox = new CheckBox("Action");
+		actionGenreCheckBox.setSelected((Boolean) controller.get("genre_action"));
+
+		comedyGenreCheckBox = new CheckBox("Comedy");
+		comedyGenreCheckBox.setSelected((Boolean) controller.get("genre_comedy"));
+
+		documentaryGenreCheckBox = new CheckBox("Documentary");
+		documentaryGenreCheckBox.setSelected((Boolean) controller.get("genre_documnetary"));
+
+		dramaGenreCheckBox = new CheckBox("Drama");
+		dramaGenreCheckBox.setSelected((Boolean) controller.get("genre_drama"));
+
+		fantasyGenreCheckBox = new CheckBox("Fantasy");
+		fantasyGenreCheckBox.setSelected((Boolean) controller.get("genre_fantasy"));
+
+		horrorGenreCheckBox = new CheckBox("Horror");
+		horrorGenreCheckBox.setSelected((Boolean) controller.get("genre_horror"));
+
+		romanceGenreCheckBox = new CheckBox("Romance");
+		romanceGenreCheckBox.setSelected((Boolean) controller.get("genre_romance"));
+
+		scifiGenreCheckBox = new CheckBox("Sci-Fi");
+		scifiGenreCheckBox.setSelected((Boolean) controller.get("genre_sci-fi"));
+
+		thrillerGenreCheckBox = new CheckBox("Thriller");
+		thrillerGenreCheckBox.setSelected((Boolean) controller.get("genre_thriller"));
+
+		westernGenreCheckBox = new CheckBox("Western");
+		westernGenreCheckBox.setSelected((Boolean) controller.get("genre_western"));
+
+		pictureAwardCheckBox = new CheckBox("Picture Award");
+		pictureAwardCheckBox.setSelected((Boolean) controller.get("award_picture"));
+
+		directingAwardCheckBox = new CheckBox("Directing Award");
+		directingAwardCheckBox.setSelected((Boolean) controller.get("award_directing"));
+
+		cinematographyAwardCheckBox = new CheckBox("Cinematography Award");
+		cinematographyAwardCheckBox.setSelected((Boolean) controller.get("award_cinematography"));
+
+		actingAwardCheckBox = new CheckBox("Acting Award");
+		actingAwardCheckBox.setSelected((Boolean) controller.get("award_acting"));
+
+		// Init Spinner
+		numberOfReviewsSpinner = new Spinner<Integer>();
+		numberOfReviewsSpinner.getValueFactory().setValue((Integer) controller.get("number_of_reviews"));
+
+		// Init Sliders
+		runtimeSlider = new Slider();
+		runtimeSlider.setValue((Double) controller.get("runtime"));
+
+		// Init Choice Boxes
+		ratingChoiceBox = new ChoiceBox();
+		ratingChoiceBox.getItems().add("PG");
+		ratingChoiceBox.getItems().add("R");
+		ratingChoiceBox.getItems().add("PG-13");
+		ratingChoiceBox.getItems().add("G");
+		ratingChoiceBox.getSelectionModel().select((Integer) controller.get("rating"))
+
+		// Init Text Areas
+		summaryTextArea = new TextArea();
+		summaryTextArea.setText((String) controller.get("summary"));
+
+		// Init Texts
+		commentText = new Text("This is a comment.");
+		commentText.setFont(FONT_SMALL);
+
+		movieTitleText = new Text("Movie Title");
+		movieTitleText.setFont(FONT_LARGE);
+
+		summaryHeadlineText = new Text("Summary");
+		summaryHeadlineText.setFont(FONT_LARGE);
+		
+		commentsHeadlineText = new Text("Comments");
+		commentsHeadlineText.setFont(FONT_LARGE);
+
+		// Init Buttons
+		selectPosterButton = new Button("Select Poster");
+
+		// Init ImageViews
+		FileInputStream posterInput = new FileInputStream("path/to/image.jpg");
+		FileInputStream userProfileImageInput = new FileInputStream("path/to/image.jpg");
+
+		Image moviePosterImage = new Image(posterInput);
+		Image userProfileImage = new Image(userProfileImageInput);
+
+		moviePosterImageView = new ImageView(moviePosterImage);
+		userProfileImageView = new ImageView(userProfileImage);
+
 	}
 
 	// The controller calls this method when it removes a view.
