@@ -76,7 +76,7 @@ public final class Application extends javafx.application.Application
 
 		stage.setScene(scene);
 		stage.centerOnScreen();
-		stage.show();
+		// stage.show();
 
 		// Animation: scale text to fill stage over 1.0 seconds
 		Duration			sd = new Duration(500);
@@ -120,12 +120,12 @@ public final class Application extends javafx.application.Application
 		public void	handle(ActionEvent e)
 		{
 			View		view1 = new View(controller, "View 1",  40,  40);
-			View		view2 = new View(controller, "View 2", 120, 120);
-			View		view3 = new View(controller, "View 3", 200, 200);
+			// View		view2 = new View(controller, "View 2", 120, 120);
+			// View		view3 = new View(controller, "View 3", 200, 200);
 
 			controller.addView(view1);
-			controller.addView(view2);
-			controller.addView(view3);
+			// controller.addView(view2);
+			// controller.addView(view3);
 
 			stage.hide();
 		}

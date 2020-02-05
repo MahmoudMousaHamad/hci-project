@@ -22,6 +22,7 @@ import edu.ou.cs.hci.assignment.prototypea.Controller;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -36,6 +37,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
@@ -66,6 +68,9 @@ public final class EditorPane extends AbstractPane
 	private static final Font		FONT_LARGE =
 		Font.font("Serif", FontPosture.ITALIC, 24.0);
 
+	private static final Font		FONT_MED =
+		Font.font("Serif", FontPosture.ITALIC, 20.0);
+
 	private static final Font		FONT_SMALL =
 		Font.font("Serif", FontPosture.ITALIC, 18.0);
 
@@ -81,16 +86,12 @@ public final class EditorPane extends AbstractPane
 	private TextField				textField;
 
 	// Labels
-	private Label 					directorLabel, yearLabel, ratingLabel,
-									runtimeLabel, averageReviewLabel, numberOfReviewsLabel, isColorLabel, 
-									isAnimatedLabel, actionGenreLabel, comedyGenreLabel, documentaryGenreLabel, 
-									dramaGenreLabel, fantasyGenreLabel, horrorGenreLabel, romanceGenreLabel, 
-									scifiGenreLabel, thrillerGenreLabel, westernGenreLabel, pictureAwardLabel, 
-									directingAwardLabel, cinematographyAwardLabel, actingAwardLabel, 
-									usernameLabel;
+	private Label 					yearLabel, ratingLabel,
+									runtimeLabel, averageReviewLabel, numberOfReviewsLabel;
 
 	// Text fields
-	private TextField 				yearTF, averageRatingTF, posterPathTF;
+	private TextField 				yearTF, averageRatingTF, posterPathTF, 
+									directorTextField, movieTitleTextField;
 
 	// Checkboxes
 	private CheckBox 				isColorCheckBox, isAnimatedCheckBox, actionGenreCheckBox, comedyGenreCheckBox, documentaryGenreCheckBox, 
@@ -111,7 +112,7 @@ public final class EditorPane extends AbstractPane
 	private TextArea				summaryTextArea;
 
 	// Texts
-	private Text					commentText, movieTitleText, summaryHeadlineText, commentsHeadlineText;
+	private Text					commentText, movieTitleText, summaryHeadlineText, commentsHeadlineText, usernamText;
 
 	// Buttons
 	private Button					selectPosterButton;
@@ -151,6 +152,8 @@ public final class EditorPane extends AbstractPane
 		yearTF.setText(Integer.toString((int) controller.get("year")));
 		averageRatingTF.setText(Double.toString((Double) controller.get("average_review_score")));
 		posterPathTF.setText((String) controller.get("poster_image_path"));
+		directorTextField.setText(((String) controller.get("director")));
+		movieTitleText.setText(((String) controller.get("title")));
 		// Checkboxes
 		isColorCheckBox.setSelected((Boolean) controller.get("is_color"));	
 		isAnimatedCheckBox.setSelected((Boolean) controller.get("is_animated"));	
@@ -173,18 +176,9 @@ public final class EditorPane extends AbstractPane
 		// Init Sliders
 		runtimeSlider.setValue((Double) controller.get("runtime"));
 		// Init Choice Boxes
-		ratingChoiceBox.getItems().add("PG");
-		ratingChoiceBox.getItems().add("R");
-		ratingChoiceBox.getItems().add("PG-13");
-		ratingChoiceBox.getItems().add("G");
 		ratingChoiceBox.getSelectionModel().select((Integer) controller.get("rating"));
 		// Init Text Areas
 		summaryTextArea.setText((String) controller.get("summary"));
-		// Init Texts
-		commentText.setFont(FONT_SMALL);
-		movieTitleText.setFont(FONT_LARGE);
-		summaryHeadlineText.setFont(FONT_LARGE);
-		commentsHeadlineText.setFont(FONT_LARGE);
 	}
 
 	// The controller calls this method when it removes a view.
@@ -192,18 +186,16 @@ public final class EditorPane extends AbstractPane
 	public void terminate() {
 		// Widget Gallery, Slider
 		slider.valueProperty().removeListener(this::changeDecimal);
-
 		// Widget Gallery, Spinner
 		spinner.valueProperty().removeListener(this::changeInteger);
-
 		// Widget Gallery, Text Field
 		textField.setOnAction(null);
-
 		// Text Fields
 		yearTF.setOnAction(null);
 		averageRatingTF.setOnAction(null);
 		posterPathTF.setOnAction(null);
-
+		directorTextField.setOnAction(null);
+		movieTitleTextField.setOnAction(null);
 		// CheckBox
 		isColorCheckBox.selectedProperty().removeListener(this::changeBoolean);
 		isAnimatedCheckBox.selectedProperty().removeListener(this::changeBoolean);
@@ -221,16 +213,12 @@ public final class EditorPane extends AbstractPane
 		directingAwardCheckBox.selectedProperty().removeListener(this::changeBoolean);
 		cinematographyAwardCheckBox.selectedProperty().removeListener(this::changeBoolean);
 		actingAwardCheckBox.selectedProperty().removeListener(this::changeBoolean);
-
 		// Spinner
 		numberOfReviewsSpinner.valueProperty().removeListener(this::changeInteger);
-
 		// Slider
 		runtimeSlider.valueProperty().removeListener(this::changeDecimal);
-
 		// ChoiceBoxes
 		ratingChoiceBox.getSelectionModel().selectedIndexProperty().removeListener(this::changeInteger);
-
 		// Text Areas
 		summaryTextArea.textProperty().removeListener(this::changeString);
 
@@ -249,34 +237,21 @@ public final class EditorPane extends AbstractPane
 			textField.setText((String) value);
 		}
 
-		// if ("director".equals(key))
-		// {
-		// component.setValue((Boolean) value);
-		// }
-		// else if ("title".equals(key))
-		// {
-		// component.setValue((Boolean) value);
-		// }
 		if ("summary".equals(key)) {
 			summaryTextArea.setText((String) value);
 		}
-		// else if ("comment_body".equals(key))
-		// {
-		// component.setValue((Boolean) value);
-		// }
-		// else if ("user_name".equals(key))
-		// {
-		// component.setValue((Boolean) value);
-		// }
 		else if ("poster_image_path".equals(key)) {
 			posterPathTF.setText((String) value);
-		} else if ("average_review_score".equals(key)) {
+		} else if ("director".equals(key)) {
+			directorTextField.setText((String) value);
+		}else if ("title".equals(key)) {
+			movieTitleTextField.setText((String) value);
+		}else if ("average_review_score".equals(key)) {
 			averageRatingTF.setText((String) value);
 		}
-		// else if ("award_picture".equals(key))
-		// {
-		// component.setValue((Boolean) value);
-		// }
+		else if ("award_picture".equals(key)){
+			actingAwardCheckBox.setSelected((Boolean) value);
+		}
 		else if ("award_directing".equals(key)) {
 			directingAwardCheckBox.setSelected((Boolean) value);
 		} else if ("award_cinematography".equals(key)) {
@@ -325,20 +300,31 @@ public final class EditorPane extends AbstractPane
 	// **********************************************************************
 
 	private Pane buildPane() {
-		initialize();
 		// Layout the widgets in a vertical flow with small gaps between them.
 		final FlowPane pane = new FlowPane(Orientation.VERTICAL, 8.0, 8.0);
 
 		pane.setAlignment(Pos.TOP_LEFT);
 
-		pane.getChildren().add(createSlider());
-		pane.getChildren().add(createSpinner());
-		pane.getChildren().add(createTextField());
+		// pane.getChildren().add(createSlider());
+		// pane.getChildren().add(createSpinner());
+		// pane.getChildren().add(createTextField());
 
-		// Title
-		pane.getChildren().add(movieTitleText);
-		// Poster
-		// CheckBoxes
+		createButtonWithoutPane();
+		createImageViewsWithoutPane();
+		createTextsWithoutPane();
+
+		pane.getChildren().add(createPane(movieTitleText));
+		pane.getChildren().add(createPane(moviePosterImageView));
+
+		pane.getChildren().add(createTextFields());
+		pane.getChildren().add(createSpinner());
+		pane.getChildren().add(createSlider());
+		pane.getChildren().add(createChoiceBox());
+
+		pane.getChildren().add(createCheckBoxes());
+		pane.getChildren().add(summaryHeadlineText);
+		pane.getChildren().add(createTextArea());
+		pane.getChildren().add(createCommentSection());
 
 		return pane;
 	}
@@ -347,20 +333,26 @@ public final class EditorPane extends AbstractPane
 	// Private Methods (Widget Pane Creators)
 	// **********************************************************************
 
-	private Pane createStackPane(Node... nodes)
+	private Pane createPane(Node... nodes)
 	{
-		StackPane stackPane = new StackPane();
+		FlowPane flow = new FlowPane();
+		flow.setPadding(new Insets(10, 10, 10, 10));
+		flow.setHgap(5);
 		for (Node node : nodes)
 		{
-			stackPane.getChildren().add(node);
+			flow.getChildren().add(node);
 		}
-		return stackPane;
+		return flow;
 	}
 
 	private Pane createCheckBoxes()
 	{	
 		isColorCheckBox = new CheckBox("Colored");
 		isAnimatedCheckBox = new CheckBox("Animated");
+
+		Text genreSubHeadText = new Text("Genres");
+		genreSubHeadText.setFont(FONT_MED);
+
 		actionGenreCheckBox = new CheckBox("Action");
 		comedyGenreCheckBox = new CheckBox("Comedy");
 		documentaryGenreCheckBox = new CheckBox("Documentary");
@@ -371,57 +363,122 @@ public final class EditorPane extends AbstractPane
 		scifiGenreCheckBox = new CheckBox("Sci-Fi");
 		thrillerGenreCheckBox = new CheckBox("Thriller");
 		westernGenreCheckBox = new CheckBox("Western");
+
+		Text awardSubHeadText = new Text("Awards");
+		awardSubHeadText.setFont(FONT_MED);
+
 		pictureAwardCheckBox = new CheckBox("Picture Award");
 		directingAwardCheckBox = new CheckBox("Directing Award");
 		cinematographyAwardCheckBox = new CheckBox("Cinematography Award");
 		actingAwardCheckBox = new CheckBox("Acting Award");
 
-		return createStackPane(isColorCheckBox, isAnimatedCheckBox, actionGenreCheckBox,
+		isColorCheckBox.selectedProperty().addListener(this::changeBoolean);
+		isAnimatedCheckBox.selectedProperty().addListener(this::changeBoolean);
+		actionGenreCheckBox.selectedProperty().addListener(this::changeBoolean);
+		comedyGenreCheckBox.selectedProperty().addListener(this::changeBoolean);
+		documentaryGenreCheckBox.selectedProperty().addListener(this::changeBoolean);
+		dramaGenreCheckBox.selectedProperty().addListener(this::changeBoolean);
+		fantasyGenreCheckBox.selectedProperty().addListener(this::changeBoolean);
+		horrorGenreCheckBox.selectedProperty().addListener(this::changeBoolean);
+		romanceGenreCheckBox.selectedProperty().addListener(this::changeBoolean);
+		scifiGenreCheckBox.selectedProperty().addListener(this::changeBoolean);
+		thrillerGenreCheckBox.selectedProperty().addListener(this::changeBoolean);
+		westernGenreCheckBox.selectedProperty().addListener(this::changeBoolean);
+		pictureAwardCheckBox.selectedProperty().addListener(this::changeBoolean);
+		directingAwardCheckBox.selectedProperty().addListener(this::changeBoolean);
+		cinematographyAwardCheckBox.selectedProperty().addListener(this::changeBoolean);
+		actingAwardCheckBox.selectedProperty().addListener(this::changeBoolean);
+		
+		return createPane(
+		 createPane(isColorCheckBox, isAnimatedCheckBox),
+		 createPane(createPane(genreSubHeadText), actionGenreCheckBox,
 		 comedyGenreCheckBox, documentaryGenreCheckBox, dramaGenreCheckBox, fantasyGenreCheckBox, 
 		 horrorGenreCheckBox, romanceGenreCheckBox, scifiGenreCheckBox, thrillerGenreCheckBox, 
-		 westernGenreCheckBox, pictureAwardCheckBox, directingAwardCheckBox, 
-		 cinematographyAwardCheckBox, actingAwardCheckBox);
+		 westernGenreCheckBox),
+		 createPane(createPane(awardSubHeadText),
+		 pictureAwardCheckBox, directingAwardCheckBox, 
+		 cinematographyAwardCheckBox, actingAwardCheckBox));
 	}
 
 	private Pane createTextFields()
 	{
 		yearTF = new TextField();
 		averageRatingTF = new TextField();
-		posterPathTF = new TextField();
+		posterPathTF = new TextField("movie-poster.jpg");
+		directorTextField = new TextField();
+		movieTitleTextField = new TextField("Jumanji: Next Level");
+		movieTitleTextField.setFont(FONT_LARGE);
 
-		return createStackPane(yearTF, averageRatingTF, posterPathTF);
+		yearLabel = new Label("Year:");
+		averageReviewLabel = new Label("Average Review Score:");
+		Label directorLabel = new Label("Director:");
+		Label movieTitlLabel = new Label("Title:");
+		movieTitlLabel.setFont(FONT_LARGE);
+
+		selectPosterButton = new Button("Select Poster Path...");
+
+		yearTF.setOnAction(actionHandler);
+		averageRatingTF.setOnAction(actionHandler);
+		posterPathTF.setOnAction(actionHandler);
+		directorTextField.setOnAction(actionHandler);
+		movieTitleTextField.setOnAction(actionHandler);
+
+		return createPane(
+			createPane(movieTitlLabel, movieTitleTextField),
+			createPane(directorLabel, directorTextField),
+			createPane(yearLabel, yearTF), 
+			createPane(averageReviewLabel, averageRatingTF),
+			createPane(posterPathTF, selectPosterButton));
 	}
 
 	private Pane createSpinner()
 	{
-		numberOfReviewsSpinner = new Spinner<Integer>(0, 100, 0, 1);
-		return createStackPane(numberOfReviewsSpinner);
+		numberOfReviewsSpinner = new Spinner<Integer>(0, 10000000, 0, 1);
+		numberOfReviewsSpinner.valueProperty().addListener(this::changeInteger);
+		numberOfReviewsLabel = new Label("Number of Reviews:");
+		return createPane(numberOfReviewsLabel, numberOfReviewsSpinner);
 	}
 
 	private Pane createSlider()
 	{
-		runtimeSlider = new Slider();
-		return createStackPane(runtimeSlider);
+		runtimeSlider = new Slider(0.0, 360.0, 180.0);
+		runtimeSlider.valueProperty().addListener(this::changeDecimal);
+		runtimeLabel = new Label("Runtime:");
+		return createPane(runtimeLabel, runtimeSlider);
 	}
 
 	private Pane createChoiceBox()
 	{
 		ratingChoiceBox = new ChoiceBox();
-		return createStackPane(ratingChoiceBox);
+		ratingChoiceBox.getItems().add("PG");
+		ratingChoiceBox.getItems().add("R");
+		ratingChoiceBox.getItems().add("PG-13");
+		ratingChoiceBox.getItems().add("G");
+		ratingChoiceBox.getSelectionModel().selectedIndexProperty().addListener(this::changeInteger);
+		ratingLabel = new Label("Rating:");
+		return createPane(ratingLabel, ratingChoiceBox);
 	}
 
 	private Pane createTextArea()
 	{
 		summaryTextArea = new TextArea();
-		return createStackPane(summaryTextArea);
+		summaryTextArea.textProperty().addListener(this::changeString);
+
+		summaryHeadlineText = new Text("Summary");
+		return createPane(summaryTextArea);
 	}
 
 	private void createTextsWithoutPane()
 	{
-		commentText = new Text("This is a comment.");
+		commentText = new Text("What an AMAZING movie!!");
 		movieTitleText = new Text("Movie Title");
 		summaryHeadlineText = new Text("Summary");
 		commentsHeadlineText = new Text("Comments");
+
+		commentText.setFont(FONT_SMALL);
+		movieTitleText.setFont(FONT_LARGE);
+		summaryHeadlineText.setFont(FONT_LARGE);
+		commentsHeadlineText.setFont(FONT_LARGE);
 	}
 
 	private void createButtonWithoutPane()
@@ -431,29 +488,16 @@ public final class EditorPane extends AbstractPane
 
 	private void createImageViewsWithoutPane()
 	{
-		FileInputStream posterInput;
-		try 
-		{
-			posterInput = new FileInputStream(RSRC + "/assignment/movie-poster.jpg");
-			final Image moviePosterImage = new Image(posterInput);
-			moviePosterImageView = new ImageView(moviePosterImage);
-		} 
-		catch (FileNotFoundException e) 
-		{
-			e.printStackTrace();
-		}
-		
-		FileInputStream userProfileImageInput;
-		try 
-		{
-			userProfileImageInput = new FileInputStream(RSRC + "/assignment/profile-image.png");
-			final Image userProfileImage = new Image(userProfileImageInput);
-			userProfileImageView = new ImageView(userProfileImage);
-		} 
-		catch (FileNotFoundException e) 
-		{
-			e.printStackTrace();
-		}
+		moviePosterImageView = createFXIcon("movie-poster.jpg", 125, 250);
+		userProfileImageView = createFXIcon("profile-image.png", 50, 50);
+	}
+
+	private Pane createCommentSection()
+	{
+		usernamText = new Text("Mahmoud Mousa Hamad");
+		usernamText.setFont(FONT_SMALL);
+		return createPane(commentsHeadlineText, createPane(userProfileImageView,
+				 usernamText), createPane(commentText));
 	}
 
 	// Create a pane with a slider for the gallery. The progress bar and
@@ -502,30 +546,21 @@ public final class EditorPane extends AbstractPane
 
 	private void changeDecimal(final ObservableValue<? extends Number> observable, final Number oldValue,
 			final Number newValue) {
-		if (observable == slider.valueProperty())
-			controller.set("myDouble", newValue);
-		
 		if (observable == runtimeSlider.valueProperty())
 			controller.set("runtime", newValue);
 	}
 
 	private void changeInteger(final ObservableValue<? extends Number> observable, final Number oldValue,
 			final Number newValue) {
-		if (observable == spinner.valueProperty())
-			controller.set("myInt", newValue);
-		
-		if (observable == numberOfReviewsSpinner.valueProperty())
+		if (observable.equals(numberOfReviewsSpinner.valueProperty()))
 			controller.set("number_of_reviews", newValue);
 		
-		if (observable == ratingChoiceBox.valueProperty())
+		if (observable.equals(ratingChoiceBox.getSelectionModel().selectedIndexProperty()))
 			controller.set("rating", newValue);
 	}
 
 	private void changeBoolean(final ObservableValue<? extends Boolean> observable, final Boolean oldValue,
 			final Boolean newValue) {
-		if (observable.equals(spinner.valueProperty()))
-			controller.set("myInt", newValue);
-
 		if (observable.equals(isColorCheckBox.selectedProperty()))
 			controller.set("is_color", newValue);
 
@@ -577,7 +612,7 @@ public final class EditorPane extends AbstractPane
 	
 	private void changeString(final ObservableValue<? extends String> observable, final String oldValue,
 			final String newValue) {
-		if (observable.equals(summaryTextArea.getText()))
+		if (observable.equals(summaryTextArea.textProperty()))
 			controller.set("summary", newValue);
 	}
 
@@ -591,6 +626,19 @@ public final class EditorPane extends AbstractPane
 
 			if (source == textField)
 				controller.set("myString", textField.getText());
+			if (source == yearTF)
+				controller.set("year", yearTF.getText());
+			if (source == averageRatingTF)
+				controller.set("average_review_score", averageRatingTF.getText());
+			if (source == posterPathTF)
+				controller.set("poster_image_path", posterPathTF.getText());
+			if (source == directorTextField)
+				controller.set("director", directorTextField.getText());
+			if (source == movieTitleTextField)
+			{
+				controller.set("title", movieTitleTextField.getText());
+				movieTitleText.setText(movieTitleTextField.getText());
+			}
 		}
 	}
 }
