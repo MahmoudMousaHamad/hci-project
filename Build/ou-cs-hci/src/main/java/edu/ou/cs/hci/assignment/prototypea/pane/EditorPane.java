@@ -109,7 +109,7 @@ public final class EditorPane extends AbstractPane
 	private ChoiceBox				ratingChoiceBox;
 
 	// Text Areas
-	private TextArea				summaryTextArea;
+	private TextArea				summaryTextArea, commentTextArea;
 
 	// Texts
 	private Text					commentText, movieTitleText, summaryHeadlineText, commentsHeadlineText, usernamText;
@@ -179,6 +179,8 @@ public final class EditorPane extends AbstractPane
 		ratingChoiceBox.getSelectionModel().select((Integer) controller.get("rating"));
 		// Init Text Areas
 		summaryTextArea.setText((String) controller.get("summary"));
+		commentTextArea.setText((String) controller.get("comment"));
+
 	}
 
 	// The controller calls this method when it removes a view.
@@ -221,6 +223,7 @@ public final class EditorPane extends AbstractPane
 		ratingChoiceBox.getSelectionModel().selectedIndexProperty().removeListener(this::changeInteger);
 		// Text Areas
 		summaryTextArea.textProperty().removeListener(this::changeString);
+		commentTextArea.textProperty().removeListener(this::changeString);
 
 	}
 
@@ -236,9 +239,11 @@ public final class EditorPane extends AbstractPane
 		} else if ("myString".equals(key)) {
 			textField.setText((String) value);
 		}
-
 		if ("summary".equals(key)) {
 			summaryTextArea.setText((String) value);
+		}
+		if ("comment".equals(key)) {
+			commentTextArea.setText((String) value);
 		}
 		else if ("poster_image_path".equals(key)) {
 			posterPathTF.setText((String) value);
@@ -323,8 +328,8 @@ public final class EditorPane extends AbstractPane
 
 		pane.getChildren().add(createCheckBoxes());
 		// pane.getChildren().add(summaryHeadlineText);
-		pane.getChildren().add(createTextArea());
-		pane.getChildren().add(createCommentSection());
+		pane.getChildren().add(createTextAreas());
+		// pane.getChildren().add(createCommentSection());
 
 		return pane;
 	}
@@ -351,7 +356,7 @@ public final class EditorPane extends AbstractPane
 		isAnimatedCheckBox = new CheckBox("Animated");
 
 		Node coloredAnimatedNode = 
-		createTitledPane(createPane(isColorCheckBox, isAnimatedCheckBox), "");
+		createTitledPane(createPane(isColorCheckBox, isAnimatedCheckBox), "Colored/Animated info");
 
 		Text genreSubHeadText = new Text("Genres");
 		genreSubHeadText.setFont(FONT_MED);
@@ -456,8 +461,11 @@ public final class EditorPane extends AbstractPane
 		runtimeSlider.valueProperty().addListener(this::changeDecimal);
 		runtimeSlider.setShowTickLabels(true);
 		runtimeSlider.setShowTickMarks(true);
-		runtimeLabel = new Label("Runtime:");
-		return createPane(createTitledPane(runtimeSlider, "Runtime"));
+		runtimeLabel = new Label("Runtime: ");
+		return createPane(
+				createTitledPane(
+					createPane(runtimeSlider, runtimeLabel), 
+				"Runtime"));
 	}
 
 	private Pane createChoiceBox()
@@ -472,13 +480,17 @@ public final class EditorPane extends AbstractPane
 		return createPane(createTitledPane(ratingChoiceBox, "Rating"));
 	}
 
-	private Pane createTextArea()
+	private Pane createTextAreas()
 	{
 		summaryTextArea = new TextArea();
 		summaryTextArea.textProperty().addListener(this::changeString);
 
+		commentTextArea = new TextArea();
+		commentTextArea.textProperty().addListener(this::changeString);
+
 		summaryHeadlineText = new Text("Summary");
-		return createPane(createTitledPane(summaryTextArea, "Summary"));
+		return createPane(createPane(createTitledPane(summaryTextArea, "Summary")),
+		 createPane(createTitledPane(commentTextArea, "Comment")));
 	}
 
 	private void createTextsWithoutPane()
@@ -560,7 +572,10 @@ public final class EditorPane extends AbstractPane
 	private void changeDecimal(final ObservableValue<? extends Number> observable, final Number oldValue,
 			final Number newValue) {
 		if (observable == runtimeSlider.valueProperty())
+		{
 			controller.set("runtime", newValue);
+			runtimeLabel.textProperty().set("Runtime: " + Double.toString((int) (double)newValue));
+		}
 	}
 
 	private void changeInteger(final ObservableValue<? extends Number> observable, final Number oldValue,
@@ -627,6 +642,8 @@ public final class EditorPane extends AbstractPane
 			final String newValue) {
 		if (observable.equals(summaryTextArea.textProperty()))
 			controller.set("summary", newValue);
+		if (observable.equals(commentTextArea.textProperty()))
+			controller.set("comment", newValue);
 	}
 
 	// **********************************************************************

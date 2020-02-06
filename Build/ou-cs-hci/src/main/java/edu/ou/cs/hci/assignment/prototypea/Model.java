@@ -52,7 +52,7 @@ public final class Model
 		properties.put("director",						"director_name");
 		properties.put("title",							"title");
 		properties.put("summary",						"Summary summary summary summary summary summary summary summary ");
-		properties.put("comment_body",					"Great movie!");
+		properties.put("comment",						"Great movie!");
 		properties.put("user_name",						"Mahmoud Mousa Hamad");
 		properties.put("poster_image_path",				"path/to/image.jpg");
 		properties.put("average_review_score",			10.0);
