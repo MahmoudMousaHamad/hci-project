@@ -313,7 +313,7 @@ public final class EditorPane extends AbstractPane
 		createImageViewsWithoutPane();
 		createTextsWithoutPane();
 
-		pane.getChildren().add(createPane(movieTitleText));
+		// pane.getChildren().add(createPane(movieTitleText));
 		pane.getChildren().add(createPane(moviePosterImageView));
 
 		pane.getChildren().add(createTextFields());
@@ -322,7 +322,7 @@ public final class EditorPane extends AbstractPane
 		pane.getChildren().add(createChoiceBox());
 
 		pane.getChildren().add(createCheckBoxes());
-		pane.getChildren().add(summaryHeadlineText);
+		// pane.getChildren().add(summaryHeadlineText);
 		pane.getChildren().add(createTextArea());
 		pane.getChildren().add(createCommentSection());
 
@@ -350,6 +350,9 @@ public final class EditorPane extends AbstractPane
 		isColorCheckBox = new CheckBox("Colored");
 		isAnimatedCheckBox = new CheckBox("Animated");
 
+		Node coloredAnimatedNode = 
+		createTitledPane(createPane(isColorCheckBox, isAnimatedCheckBox), "");
+
 		Text genreSubHeadText = new Text("Genres");
 		genreSubHeadText.setFont(FONT_MED);
 
@@ -364,6 +367,14 @@ public final class EditorPane extends AbstractPane
 		thrillerGenreCheckBox = new CheckBox("Thriller");
 		westernGenreCheckBox = new CheckBox("Western");
 
+		Node genreCheckBoxesNode = 
+		createTitledPane(createPane(actionGenreCheckBox,
+		comedyGenreCheckBox, documentaryGenreCheckBox, 
+		dramaGenreCheckBox, fantasyGenreCheckBox, 
+		horrorGenreCheckBox, romanceGenreCheckBox, 
+		scifiGenreCheckBox, thrillerGenreCheckBox, 
+		westernGenreCheckBox), "Genres");
+
 		Text awardSubHeadText = new Text("Awards");
 		awardSubHeadText.setFont(FONT_MED);
 
@@ -371,6 +382,12 @@ public final class EditorPane extends AbstractPane
 		directingAwardCheckBox = new CheckBox("Directing Award");
 		cinematographyAwardCheckBox = new CheckBox("Cinematography Award");
 		actingAwardCheckBox = new CheckBox("Acting Award");
+
+		Node awardCheckBoxesNode = 
+		createTitledPane(createPane(pictureAwardCheckBox, 
+		directingAwardCheckBox, 
+		cinematographyAwardCheckBox, 
+		actingAwardCheckBox), "Awards");
 
 		isColorCheckBox.selectedProperty().addListener(this::changeBoolean);
 		isAnimatedCheckBox.selectedProperty().addListener(this::changeBoolean);
@@ -389,15 +406,8 @@ public final class EditorPane extends AbstractPane
 		cinematographyAwardCheckBox.selectedProperty().addListener(this::changeBoolean);
 		actingAwardCheckBox.selectedProperty().addListener(this::changeBoolean);
 		
-		return createPane(
-		 createPane(isColorCheckBox, isAnimatedCheckBox),
-		 createPane(createPane(genreSubHeadText), actionGenreCheckBox,
-		 comedyGenreCheckBox, documentaryGenreCheckBox, dramaGenreCheckBox, fantasyGenreCheckBox, 
-		 horrorGenreCheckBox, romanceGenreCheckBox, scifiGenreCheckBox, thrillerGenreCheckBox, 
-		 westernGenreCheckBox),
-		 createPane(createPane(awardSubHeadText),
-		 pictureAwardCheckBox, directingAwardCheckBox, 
-		 cinematographyAwardCheckBox, actingAwardCheckBox));
+		return createPane(coloredAnimatedNode, 
+		genreCheckBoxesNode, awardCheckBoxesNode);
 	}
 
 	private Pane createTextFields()
@@ -424,27 +434,30 @@ public final class EditorPane extends AbstractPane
 		movieTitleTextField.setOnAction(actionHandler);
 
 		return createPane(
-			createPane(movieTitlLabel, movieTitleTextField),
-			createPane(directorLabel, directorTextField),
-			createPane(yearLabel, yearTF), 
-			createPane(averageReviewLabel, averageRatingTF),
-			createPane(posterPathTF, selectPosterButton));
+			createTitledPane(movieTitleTextField, "Title"),
+			createTitledPane(directorTextField, "Director"),
+			createTitledPane(yearTF, "Year"), 
+			createTitledPane(averageRatingTF, "Average Rating"),
+			createTitledPane(createPane(posterPathTF, selectPosterButton), "Poster"));
 	}
 
 	private Pane createSpinner()
 	{
 		numberOfReviewsSpinner = new Spinner<Integer>(0, 10000000, 0, 1);
 		numberOfReviewsSpinner.valueProperty().addListener(this::changeInteger);
+		numberOfReviewsSpinner.setEditable(true);
 		numberOfReviewsLabel = new Label("Number of Reviews:");
-		return createPane(numberOfReviewsLabel, numberOfReviewsSpinner);
+		return createPane(createTitledPane(numberOfReviewsSpinner, "Number of Reviews"));
 	}
 
 	private Pane createSlider()
 	{
 		runtimeSlider = new Slider(0.0, 360.0, 180.0);
 		runtimeSlider.valueProperty().addListener(this::changeDecimal);
+		runtimeSlider.setShowTickLabels(true);
+		runtimeSlider.setShowTickMarks(true);
 		runtimeLabel = new Label("Runtime:");
-		return createPane(runtimeLabel, runtimeSlider);
+		return createPane(createTitledPane(runtimeSlider, "Runtime"));
 	}
 
 	private Pane createChoiceBox()
@@ -456,7 +469,7 @@ public final class EditorPane extends AbstractPane
 		ratingChoiceBox.getItems().add("G");
 		ratingChoiceBox.getSelectionModel().selectedIndexProperty().addListener(this::changeInteger);
 		ratingLabel = new Label("Rating:");
-		return createPane(ratingLabel, ratingChoiceBox);
+		return createPane(createTitledPane(ratingChoiceBox, "Rating"));
 	}
 
 	private Pane createTextArea()
@@ -465,7 +478,7 @@ public final class EditorPane extends AbstractPane
 		summaryTextArea.textProperty().addListener(this::changeString);
 
 		summaryHeadlineText = new Text("Summary");
-		return createPane(summaryTextArea);
+		return createPane(createTitledPane(summaryTextArea, "Summary"));
 	}
 
 	private void createTextsWithoutPane()
